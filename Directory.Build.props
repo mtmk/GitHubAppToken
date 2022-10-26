@@ -1,0 +1,17 @@
+<Project>
+    <PropertyGroup>
+        <PackageVersion>1.0.0</PackageVersion>
+        <Authors>Ziya Suzen</Authors>
+        <Description>Simple GitHub App Access Token creator with no dependencies.</Description>
+        <Copyright>Copyright (c) Ziya Suzen 2021,2022</Copyright>
+        <PackageLicenseExpression>MIT OR Apache-2.0</PackageLicenseExpression>
+        <PackageProjectUrl>https://github.com/mtmk/GitHubAppToken</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/mtmk/GitHubAppToken</RepositoryUrl>
+        <PackageIcon>ght.png</PackageIcon>
+        <PackageTags>github</PackageTags>
+        <PackageReleaseNotes>This is an initial release.</PackageReleaseNotes>
+    </PropertyGroup>
+    <PropertyGroup>
+        <Deterministic>true</Deterministic>
+    </PropertyGroup>
+</Project>
