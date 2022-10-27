@@ -29,10 +29,32 @@ and pass it on to a simple client:
 string jwt = GitHubJwt.Create(pemRsaKey, appId, expMinutes);    
 HttpClient httpClient = new HttpClient();
 GitHubHttpClient client = new GitHubHttpClient(httpClient)
-GitHubAccessToken result = await client.GetAccessToken(jwt, owner, repo, userAgent, baseUrl);
+GitHubAccessToken result = await client.GetAccessToken(jwt, owner, repo, "my-user-agent");
 ```
+
+You can also pass an additional optional argument for GitHub Enterprise installations.
+```csharp
+GitHubApp.CreateAccessToken(key, appId, owner, repo, "my-user-agent", "https://example.com/api/v3");
+// or
+client.GetAccessToken(jwt, owner, repo, "my-user-agent", "https://example.com/api/v3");
+```
+
 ## Using Command Line Tool
 You can download the command line tool from [releases for your platform][3].
+```shell
+$ ghtoken
+Usage: ghtoken <key-file> <app-id> <owner> <repo> [<base-url>]
+$ ghtoken ~/.keys/key.pem 123456 myaccount myrepo
+ghs_sKCI9wZz1AVUq3FP5AAsViCbbac2Ib3l6ltQ
+```
+It returns the token to STDOUT without any line feeds and exit code `0` to
+indicate success. Any errors or usage is written to STDERR and the exit code
+would be `2` for usage and `3` for all other exceptions.
+
+You can also pass an optional GitHub Enterprise URL as the last argument:
+```shell
+$ ghtoken ~/.keys/key.pem 123 myaccount myrepo http://example.com/api/v3
+```
 
 ## How it Works
 
