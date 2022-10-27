@@ -8,9 +8,60 @@ that can create temporary access tokens to be used by GitHub APIs or git http
 authentication, using a GitHub App private key.
 
 ## Using the Library
-
 [![Nuget](https://img.shields.io/nuget/v/GitHubAppToken)](https://www.nuget.org/packages/GitHubAppToken/)
+I wanted to avoid having any third party dependencies for anyone simply wanting to
+copy paste the code into their projects or even into a Powershell script.
 
+You can simply call the convenience method if you want to get a token
+without much ceremony:
+```csharp
+string key = File.ReadAllText("path/to/app_private_key.pem");
+GitHubAccessToken result = GitHubApp.CreateAccessToken(key, appId, owner, repo, "my-user-agent");
+DateTimeOffset expiry = result.ExpiresAt;
+string token = result.Token;
+```
+
+If you want to integrate it into your project using `HttpClient` passed in
+by dependency injection, or using custom settings and handlers and take 
+advantage of *async* functionality, then you can generate the JWT token
+and pass it on to a simple client:
+```csharp
+string jwt = GitHubJwt.Create(pemRsaKey, appId, expMinutes);    
+HttpClient httpClient = new HttpClient();
+GitHubHttpClient client = new GitHubHttpClient(httpClient)
+GitHubAccessToken result = await client.GetAccessToken(jwt, owner, repo, userAgent, baseUrl);
+```
+## Using Command Line Tool
+You can download the command line tool from [releases for your platform][3].
+
+## How it Works
+
+There are essentially two steps to the process: Creating a JWT string and
+calling couple of GitHub REST APIs using the created JWT as Authorization.
+
+For [JWT creation][4], I used a simple routine to create only what's required
+by GitHub. (see `GitHubJwt.cs` file)
+
+As for GitHub API calls (see `GitHubHttpClient.cs` file):
+* `GET` installation information for a given repository
+* `POST` to the URL provided by the first call to create the temporary token.
+
+## Credits
+
+Unfortunately there is no support for PEM decoding in .Net *netstandard-2.0*.
+Since I did not want to create any external dependencies, I used the code
+generously made available by [JavaScience Consulting](https://www.jensign.com).
+`PemKeyDecoder.cs` file contains part of this code that is required to read
+PEM encoded private keys used by GitHub Apps.
+```
+OpenSSLKey
+ .NET 2.0  OpenSSL Public & Private Key Parser
+ Copyright (C) 2008  	JavaScience Consulting
+```
+Unfortunately I could not find the original link to the code.
+Thanks to these gists keeping a copy:
+* https://gist.github.com/stormwild/7887264
+* https://gist.github.com/njmube/edc64bb2f7599d33ca5a
 
 ## Creating a GitHub App
 
@@ -47,3 +98,6 @@ organisation or user account:
 
 [1]: https://docs.github.com/en/developers/apps/getting-started-with-apps/about-apps
 [2]: https://github.com/settings/apps
+[3]: https://github.com/mtmk/GitHubAppToken/releases
+[4]: https://jwt.io/introduction
+
