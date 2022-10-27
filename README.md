@@ -1,5 +1,7 @@
 # GitHub App Access Token Creator
 
+![logo](ght.png)
+
 Accessing GitHub securely using git or GitHub APIs from your build services or
 automation bots, services and applications can be achieved using a [GitHub App][1].
 
