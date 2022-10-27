@@ -98,6 +98,14 @@ As for GitHub API calls (see `GitHubHttpClient.cs` file):
 * `GET` installation information for a given repository
 * `POST` to the URL provided by the first call to create the temporary token.
 
+## Contributions
+
+All contributions are welcome and greatly appreciated. Please create an
+issue if you come across a problem or would like to suggest new features.
+Please also feel free to create a PR if you want to make code contributions.
+
+Thank you.
+
 ## Credits
 
 Unfortunately there is no support for PEM decoding in .Net *netstandard-2.0*.
