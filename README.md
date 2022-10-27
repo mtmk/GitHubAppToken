@@ -9,6 +9,7 @@ authentication, using a GitHub App private key.
 
 ## Using the Library
 [![Nuget](https://img.shields.io/nuget/v/GitHubAppToken)](https://www.nuget.org/packages/GitHubAppToken/)
+
 I wanted to avoid having any third party dependencies for anyone simply wanting to
 copy paste the code into their projects or even into a Powershell script.
 
