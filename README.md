@@ -9,7 +9,7 @@ authentication, using a GitHub App private key.
 
 ## Using the Library
 
-![Nuget](https://img.shields.io/nuget/v/GitHubAppToken)
+[![Nuget](https://img.shields.io/nuget/v/GitHubAppToken)](https://www.nuget.org/packages/GitHubAppToken/)
 
 
 ## Creating a GitHub App
